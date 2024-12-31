@@ -1,5 +1,8 @@
 from flask import send_from_directory
-from app import app
+
+import sys
+sys.path.append("src")
+from src import app
 
 @app.route('/')
 def index():
