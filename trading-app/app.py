@@ -9,8 +9,7 @@ from config import Config
 app = Flask(__name__)
 CORS(app)  # Permite peticiones desde el frontend
 
-
-app.config.from_object(Config)
+app.config.from_object(Config)  
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 

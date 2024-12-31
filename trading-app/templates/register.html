@@ -97,5 +97,42 @@
         <script src="../../assets/plugins/perfectscroll/perfect-scrollbar.min.js"></script>
         <script src="../../assets/plugins/pace/pace.min.js"></script>
         <script src="../../assets/js/main.min.js"></script>
+
+        <script>
+            const form = $('form');
+            form.addEventListener(('submit'), (e) => {
+                e.preventDefault();
+                const fullname = $('#floatingInput').val();
+                const email = $('#floatingInput1').val();
+                const password = $('#floatingPassword').val();
+                const confirmPassword = $('#floatingPassword1').val();
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match');
+                    return;
+                }
+                const data = {
+                    fullname,
+                    email,
+                    password
+                };
+                fetch('/api/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                }).then((res) => {
+                    if (res.status === 200) {
+                        res.json().then((data) => {
+                            alert(data['msg']);
+                            window.location.href = '/login.html';
+                        });
+                    } else {
+                        alert('An error occurred');
+                    }
+                });
+            });
+        </script>
+
     </body>
 </html>
