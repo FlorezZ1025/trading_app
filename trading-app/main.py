@@ -2,8 +2,12 @@ from flask import send_from_directory
 from app import app
 
 @app.route('/')
-def index():
+def login():
     return send_from_directory('templates', 'login.html')
+
+@app.route('/register')
+def register():
+    return send_from_directory('templates', 'register.html') 
 
 @app.route('/<path:filename>')
 def custom_templates(filename):
