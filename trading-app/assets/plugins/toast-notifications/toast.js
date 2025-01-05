@@ -23,7 +23,7 @@ const contenedorToast = document.getElementById('contenedor-toast');
 
 // Event listener para detectar click en los toasts
 contenedorToast.addEventListener('click', (e) => {
-	const toastId = e.target.closest('div.toast').id;
+	const toastId = e.target.closest('div.toast-notification').id;
 
 	if (e.target.closest('button.btn-cerrar')) {
 		cerrarToast(toastId);
@@ -41,7 +41,7 @@ const agregarToast = ({ tipo, titulo, descripcion, autoCierre }) => {
 	const nuevoToast = document.createElement('div');
 
 	// Agregar clases correspondientes
-	nuevoToast.classList.add('toast');
+	nuevoToast.classList.add('toast-notification');
 	nuevoToast.classList.add(tipo);
 	if (autoCierre) nuevoToast.classList.add('autoCierre');
 
@@ -113,7 +113,7 @@ const agregarToast = ({ tipo, titulo, descripcion, autoCierre }) => {
 	};
 
 	if (autoCierre) {
-		setTimeout(() => cerrarToast(toastId), 1500);
+		setTimeout(() => cerrarToast(toastId), 800);
 	}
 
 	// Agregamos event listener para detectar cuando termine la animación
