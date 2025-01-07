@@ -5,12 +5,15 @@ from routes.auth_routes import auth_bp
 from routes.api_amplitud import amplitud_bp
 from utils.db import db
 from config import Config
+from flask_jwt_extended import JWTManager
 
 
 app = Flask(__name__)
 CORS(app) 
 
 app.config.from_object(Config)  
+
+jwt = JWTManager(app)
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 

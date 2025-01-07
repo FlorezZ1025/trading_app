@@ -1,26 +1,6 @@
 // const contenedorBotones = document.getElementById('contenedor-botones');
 const contenedorToast = document.getElementById('contenedor-toast');
 
-// Event listener para detectar click en los botones
-// contenedorBotones.addEventListener('click', (e) => {
-// 	e.preventDefault();
-
-// 	const tipo = e.target.dataset.tipo;
-
-// 	if (tipo === 'exito') {
-// 		agregarToast({ tipo: 'exito', titulo: 'Exito!', descripcion: 'La operación fue exitosa.', autoCierre: true });
-// 	}
-// 	if (tipo === 'error') {
-// 		agregarToast({ tipo: 'error', titulo: 'Error', descripcion: 'Hubo un error', autoCierre: true });
-// 	}
-// 	if (tipo === 'info') {
-// 		agregarToast({ tipo: 'info', titulo: 'Info', descripcion: 'Esta es una notificación de información.' });
-// 	}
-// 	if (tipo === 'warning') {
-// 		agregarToast({ tipo: 'warning', titulo: 'Warning', descripcion: 'Ten cuidado' });
-// 	}
-// });
-
 // Event listener para detectar click en los toasts
 contenedorToast.addEventListener('click', (e) => {
 	const toastId = e.target.closest('div.toast-notification').id;

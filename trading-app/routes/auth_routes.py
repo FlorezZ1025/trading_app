@@ -1,4 +1,5 @@
 from flask import Blueprint, request, jsonify
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, set_access_cookies, set_refresh_cookies
 from utils.db import db
 from models.user import User
 import bcrypt
@@ -14,11 +15,11 @@ def register():
     email = data.get('email') 
     password = data.get('password')
 
-    if not name or not password:
-        return jsonify({'msg': 'Username and password are required'}), 400
+    if not email or not password:
+        return jsonify({'msg': 'Username and password are required'}), 401
     
     if User.query.filter_by(email=email).first():
-        return jsonify({'msg': 'User already exists'}), 400
+        return jsonify({'msg': 'User already exists'}), 401
 
     hashed_password = password.encode('utf-8')
     sal = bcrypt.gensalt()
@@ -33,13 +34,14 @@ def register():
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
+
+    token = request.cookies.get('access_token')
+    if token:
+        return jsonify({'msg': 'Theres an user logged in'}), 400
+
     data = request.json
     email = data.get('email') 
     password = data.get('password')
-    
-    #No usada
-    if not email or not password:
-        return jsonify({'msg': 'Email and password are required'}), 400
     
     user = User.query.filter_by(email=email).first()
     if not user:
@@ -47,5 +49,17 @@ def login():
 
     if not bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):     
         return jsonify({'msg': 'Invalid password'}), 401
+    
+    access_token = create_access_token(identity=email)
 
-    return jsonify({'msg': 'Login successful'}), 200
+    response = jsonify({'msg': 'Login successful'})
+    set_access_cookies(response, access_token)
+
+    return response, 200
+
+@auth_bp.route('/logout', methods=['POST'])
+def logout():
+    response = jsonify({'msg': 'Logout successful'})
+    response.delete_cookie('access_token')
+
+    return response, 200
