@@ -37,6 +37,8 @@ def login():
 
     token = request.cookies.get('access_token')
     if token:
+        
+
         return jsonify({'msg': 'Theres an user logged in'}), 400
 
     data = request.json
